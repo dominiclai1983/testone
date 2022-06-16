@@ -67,9 +67,7 @@ ActiveRecord::Schema.define(version: 2022_06_16_134629) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "users_id"
     t.index ["user_id"], name: "index_sessions_on_user_id"
-    t.index ["users_id"], name: "index_sessions_on_users_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -85,5 +83,4 @@ ActiveRecord::Schema.define(version: 2022_06_16_134629) do
   add_foreign_key "order_details", "products", column: "products_id"
   add_foreign_key "orders", "users", column: "users_id"
   add_foreign_key "sessions", "users"
-  add_foreign_key "sessions", "users", column: "users_id"
 end
