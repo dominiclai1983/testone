@@ -17,7 +17,7 @@ users =
       { username: "Cammy", email: "cammy@test.com", password: "password" }
     ]
   )
-=end
+
 products =
   Product.create(
     [
@@ -51,3 +51,4 @@ products =
       }
     ]
   )
+=end
