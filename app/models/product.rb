@@ -1,4 +1,8 @@
 class Product < ApplicationRecord
+  has_one_attached :image do |attachable|
+    attachable.variant :thumb, resize_to_limit: [300, 300]
+  end
+
   validates_uniqueness_of :sku
 
   validates :title, presence: true, length: { minimum: 3, maximum: 208 }

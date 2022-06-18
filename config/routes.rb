@@ -6,14 +6,16 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :users, only: %i[create index]
+    resources :sessions, only: [:create]
     #prettier auto format
     get "/products" => "products#index"
     get "/products/id" => "products#get_product_by_product_id"
     post "/products" => "products#create"
 
-    post "charge/mark_complete" => "charges#mark_complete"
-    post "charges" => "charges#create"
+    post "/charge/mark_complete" => "charges#mark_complete"
+    post "/charges" => "charges#create"
 
-    get "authenticated" => "sessions#authenticated"
+    get "/authenticated" => "sessions#authenticated"
+    delete "/sessions" => "sessions#destroy"
   end
 end
