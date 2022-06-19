@@ -1,30 +1,25 @@
 class Api::ProductsController < ApplicationController
   def index
-    @properties = Property.order(created_at: :desc).page(params[:page]).per(6)
-    if !@properties
-      return render json: { error: "not_found" }, status: :not_found
-    end
+    @products = Product.order(created_at: :desc).page(params[:page]).per(6)
+    return render json: { error: "not_found" }, status: :not_found if !@product
 
     render "api/products/index", status: :ok
   end
 
   def show
-    @property = Property.find_by(id: params[:id])
-    return render json: { error: "not_found" }, status: :not_found if !@property
+    @product = Product.find_by(id: params[:id])
+    return render json: { error: "not_found" }, status: :not_found if !@product
 
     render "api/products/show", status: :ok
   end
 
   def create
-    token = cookies.signed[:ecommerce_session_token]
-    session = Session.find_by(token: token)
-
     if session
       user = session.user
-      @property = user.properties.new(property_params)
+      @product = user.products.new(product_params)
 
-      if @property.save
-        render "api/properties/show", status: :ok
+      if @product.save
+        render "api/products/show", status: :ok
       else
         render json: { products: [] }
       end
@@ -34,14 +29,11 @@ class Api::ProductsController < ApplicationController
   end
 
   def edit
-    token = cookies.signed[:airbnb_session_token]
-    session = Session.find_by(token: token)
-
     if session
-      @property = Property.find_by(id: params[:id])
+      @product = Product.find_by(id: params[:id])
 
-      if @property and @property.update(property_params)
-        render "api/properties/show"
+      if @product and @product.update(product_params)
+        render "api/products/show"
       else
         render json: { success: false }
       end
@@ -61,5 +53,10 @@ class Api::ProductsController < ApplicationController
       :quantity,
       :image
     )
+  end
+
+  def session
+    token = cookies.signed[:ecommerce_session_token]
+    session = Session.find_by(token: token)
   end
 end

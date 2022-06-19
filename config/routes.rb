@@ -8,9 +8,10 @@ Rails.application.routes.draw do
     resources :users, only: %i[create index]
     resources :sessions, only: [:create]
     resources :orders, only: [:create]
+    resources :order_details, only: [:create]
     #prettier auto format
     get "/products" => "products#index"
-    get "/products/id" => "products#get_product_by_product_id"
+    get "/products/:id" => "products#get_product_by_product_id"
     post "/products" => "products#create"
 
     post "/charge/mark_complete" => "charges#mark_complete"
@@ -20,5 +21,7 @@ Rails.application.routes.draw do
     delete "/sessions" => "sessions#destroy"
 
     get "/orders" => "orders#index"
+
+    get "/order_details/:order" => "order_details#get_order_details_by_order_id"
   end
 end

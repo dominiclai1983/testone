@@ -1,7 +1,8 @@
 class Order < ApplicationRecord
   belongs_to :user
-  has_one :order_detail
+  has_many :order_details
   has_many :charges
+  has_many :rpdoucts, through: :order_details
 
   validates :order_date, presence: true
   validates :status, presence: true
