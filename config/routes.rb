@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, only: %i[create index]
     resources :sessions, only: [:create]
+    resources :orders, only: [:create]
     #prettier auto format
     get "/products" => "products#index"
     get "/products/id" => "products#get_product_by_product_id"
@@ -17,5 +18,7 @@ Rails.application.routes.draw do
 
     get "/authenticated" => "sessions#authenticated"
     delete "/sessions" => "sessions#destroy"
+
+    get "/orders" => "orders#index"
   end
 end
